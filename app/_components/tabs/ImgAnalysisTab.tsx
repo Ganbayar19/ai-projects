@@ -38,24 +38,48 @@ export default function ImgAnalysisTab() {
     setLoading(false);
   };
 
-  return (
-    <Card>
-      <CardContent className="p-6 space-y-4">
-        <div className="flex items-center gap-2">
-          <Sparkles />
-          <h2 className="text-xl font-bold">Image Analysis</h2>
-        </div>
+return (
+  <Card className="border border-gray-200 bg-white shadow-sm">
+    <CardContent className="p-6 space-y-4">
+      <div className="flex items-center gap-2 text-lg font-semibold">
+        <Sparkles className="w-5 h-5" />
+        Image analysis
+      </div>
 
+      <p className="text-sm text-gray-500">
+        Upload a food photo, and AI will detect the ingredients.
+      </p>
+      <div className="flex items-center gap-3">
         <Input type="file" accept="image/*" onChange={handleFile} />
-
-        {preview && <img src={preview} className="rounded-lg max-h-60" />}
-
         <Button onClick={handleGenerate} disabled={loading}>
-          {loading ? <Loader2 className="animate-spin" /> : "Analyze"}
+          {loading ? <Loader2 className="animate-spin" /> : "Generate"}
         </Button>
+      </div>
+      {preview && <img src={preview} className="rounded-lg border max-h-60" />}
+      <div className="mt-6 border-t pt-4">
+        <h3 className="font-semibold flex items-center gap-2">
+            <img
+              src="/vector.png"
+              alt="Ingredient icon"
+              className="w-4 h-4"
+            />
+         Here is the summary
+        </h3>
 
-        {result && <p className="bg-muted p-3 rounded-lg">{result}</p>}
-      </CardContent>
-    </Card>
-  );
+        {!result && (
+          <p className="text-sm text-gray-500 mt-2">
+            First, enter your image to recognize ingredients.
+          </p>
+        )}
+
+        {result && (
+          <div className="mt-2 bg-gray-50 border rounded-lg p-3 text-sm">
+            {result}
+          </div>
+        )}
+      </div>
+    </CardContent>
+  </Card>
+);
+
 }

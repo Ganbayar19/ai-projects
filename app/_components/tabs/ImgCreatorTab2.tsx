@@ -25,7 +25,7 @@ export default function ImgCreatorTab2() {
   return (
     <Card>
       <CardContent className="p-6 space-y-4">
-        <h2 className="text-xl font-bold">Image Creator</h2>
+        <h2 className="text-xl font-bold">Ingredient recognition</h2>
 
         <Input
           placeholder="Describe your image..."
