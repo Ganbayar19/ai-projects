@@ -1,53 +1,27 @@
-import { NextRequest, NextResponse } from "next/server";
-import { GoogleGenAI } from "@google/genai";
-interface Message {
-  role: "user" | "assistant";
-  content: string;
-}
-
-export async function POST(request: NextRequest) {
+export async function POST(req: Request) {
   try {
-    const { messages } = await request.json();
+    const { prompt } = await req.json();
 
-    const apiKey = process.env.GEMINI_API_KEY;
+    if (!prompt) {
+      return new Response("Prompt is required", { status: 400 });
+    }
 
-    if (!apiKey)
-      return NextResponse.json(
-        { error: "GEMINI_API_KEY is not configured" },
-        { status: 500 },
-      );
+    const encodedPrompt = encodeURIComponent(prompt.trim());
+    const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}`;
 
-    const ai = new GoogleGenAI({ apiKey });
+    const imageRes = await fetch(imageUrl);
 
-    const history = messages.slice(0, -1).map((msg: Message) => ({
-      role: msg.role === "assistant" ? "model" : "user",
-      parts: [{ text: msg.content }],
-    }));
+    if (!imageRes.ok) {
+      return new Response("Failed to generate image", { status: 500 });
+    }
 
-    const lastMessage = messages[messages.length - 1];
-
-    const chat = ai.chats.create({
-      model: "gemini-2.0-flash",
-      history,
-      config: {
-        systemInstruction:
-          "You are a helpful AI assistant specializing in food, recipes, and ingredients. Provide concise, friendly responses.",
+    return new Response(imageRes.body, {
+      headers: {
+        "Content-Type": "image/png",
       },
     });
-
-    const response = await chat.sendMessage({
-      message: lastMessage.content,
-    });
-
-    const assistantMessage =
-      response.text || "Sorry, I couldn't generate a response.";
-
-    return NextResponse.json({ message: assistantMessage });
-  } catch (error) {
-    console.error("Error in chat API:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
-    );
+  } catch (err) {
+    console.error("API error:", err);
+    return new Response("Server error", { status: 500 });
   }
 }
