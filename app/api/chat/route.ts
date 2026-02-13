@@ -1,14 +1,7 @@
 export async function POST(req: Request) {
-  try {
     const { prompt } = await req.json();
-
-    if (!prompt) {
-      return new Response("Prompt is required", { status: 400 });
-    }
-
     const encodedPrompt = encodeURIComponent(prompt.trim());
     const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}`;
-
     const imageRes = await fetch(imageUrl);
 
     if (!imageRes.ok) {
@@ -20,8 +13,4 @@ export async function POST(req: Request) {
         "Content-Type": "image/png",
       },
     });
-  } catch (err) {
-    console.error("API error:", err);
-    return new Response("Server error", { status: 500 });
-  }
 }

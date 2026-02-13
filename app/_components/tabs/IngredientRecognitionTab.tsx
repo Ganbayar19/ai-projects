@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Sparkles } from "lucide-react";
 import { pipeline } from "@xenova/transformers";
+import { FileText } from "lucide-react";
 
 export default function IngredientRecognitionTab() {
   const [text, setText] = useState("");
@@ -59,7 +60,8 @@ export default function IngredientRecognitionTab() {
         </Button>
         <div className="mt-6 border-t pt-4">
           <h3 className="font-semibold flex items-center gap-2">
-            📄 Identified Ingredients
+            <FileText className="w-4 h-4" />
+            Identified Ingredients
           </h3>
 
           {!result && (

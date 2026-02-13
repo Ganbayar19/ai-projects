@@ -60,7 +60,10 @@ export default function ImgCreatorTab2() {
           {loading ? "Generating..." : "Generate"}
         </Button>
         <div className="mt-6 border-t pt-4">
-          <h3 className="font-semibold flex items-center gap-2">📄 Result</h3>
+          <h3 className="font-semibold flex items-center gap-2">
+            <ImageIcon className="w-5 h-5" />
+            Result 
+          </h3>
           <p className="text-sm text-gray-500 mt-2">
             First, enter your text to generate an image.
           </p>

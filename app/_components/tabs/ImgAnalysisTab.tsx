@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Sparkles, Loader2 } from "lucide-react";
+import { FileText } from "lucide-react";
 
 export default function ImgAnalysisTab() {
   const [file, setFile] = useState<File | null>(null);
@@ -58,12 +59,8 @@ return (
       {preview && <img src={preview} className="rounded-lg border max-h-60" />}
       <div className="mt-6 border-t pt-4">
         <h3 className="font-semibold flex items-center gap-2">
-            <img
-              src="/vector.png"
-              alt="Ingredient icon"
-              className="w-4 h-4"
-            />
-         Here is the summary
+          <FileText className="w-4 h-4" />
+          Here is the summary
         </h3>
 
         {!result && (
