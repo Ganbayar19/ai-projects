@@ -68,7 +68,7 @@ export default function IngredientRecognitionTab() {
             <p className="text-sm text-gray-500 mt-2">
               First, enter your text to recognize an ingredients.
             </p>
-          )}
+          )}c
 
           {result && (
             <div className="mt-2 bg-gray-50 border rounded-lg p-3 text-sm">
